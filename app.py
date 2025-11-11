@@ -2,7 +2,6 @@ from flask import Flask, jsonify
 import psutil
 import os
 import platform
-import json
 
 APP = Flask(__name__)
 
@@ -10,26 +9,22 @@ nome_equipe = "Leticia Maria Maia de Andrade Vieira"
 
 @APP.get('/info')
 def info():
-    return "fNome: {nome_equipe}"
+    return f"Nome: {nome_equipe}"
 
 @APP.get('/metricas')
 def metricas():
-    #obtem versao s.o subjacente
-    print(platform.platform())
-    #obtem pid
-    print( os.getpid())
-    #uso cpu%
-    print( psutil.cpu_percent())
-    #uso memoria MB
-    print( psutil.virtual_memory().used // 1024 ** 2)
+    pid = os.getpid()
+    memoria_mb = psutil.virtual_memory().used // 1024 ** 2
+    cpu_percent = psutil.cpu_percent(interval=0.5)
+    sistema_operacional = platform.platform()
 
-    metricas = { #cria dicionario
-        'Sistema Operacional': platform.platform(),
-        'PID': os.getgid(),
-        'Uso CPU': psutil.cpu_percent(),
-        'Memoria MB': psutil.virtual_memory().used // 1024 ** 2
+    metricas = {
+        'Sistema Operacional': sistema_operacional,
+        'PID': pid,
+        'Uso CPU': f"{cpu_percent:.1f}%",
+        'Memoria MB': f"{memoria_mb} MB"
     }
-    return jsonify(metricas)#transforma p/ json
 
+    return jsonify(metricas)
 if __name__ == "__main__":
-    APP.run(host = "0.0.0.0")
+    APP.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
