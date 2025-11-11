@@ -13,7 +13,7 @@ def get_root():
 
 @app.get('/info')
 def info():
-    return f"Nome: {NOME_EQUIPE}"
+    return jsonify({"Nome": NOME_EQUIPE})
 
 @app.get('/metricas')
 def metricas():
