@@ -5,7 +5,7 @@ import psutil
 from flask import Flask, json, jsonify
 
 app = Flask(__name__)
-NOME_EQUIPE = "Alana da Conceição de Queiroz e Leticia Maria Maia de Andrade Vieira"
+NOME_EQUIPE = "Alana da Conceicao de Queiroz e Leticia Maria Maia de Andrade Vieira"
 
 @app.get('/')
 def get_root():
