@@ -8,11 +8,11 @@ APP = Flask(__name__)
 
 nome_equipe = "Leticia Maria Maia de Andrade Vieira"
 
-@APP.route('/info')
+@APP.get('/info')
 def info():
     return "fNome: {nome_equipe}"
 
-@APP.route('/metricas')
+@APP.get('/metricas')
 def metricas():
     #obtem versao s.o subjacente
     print(platform.platform())
